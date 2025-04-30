@@ -8,13 +8,16 @@ import { Radio } from "./Radio";
 import { Shadows } from "@/constants/Shadows";
 
 type Props = {
-    value: "id" | "name",
-    onChange: (v: "id" | "name") => void
+    value: "id" | "id-decreasing" | "name" | "name-decreasing",
+    onChange: (v: "id" | "id-decreasing" | "name" | "name-decreasing") => void
+
 }
 
 const options = [
     {label: "Number", value: "id" },
-    {label: "Name", value: "name" }
+    {label: "Number decreasing ", value: "id-decreasing"},
+    {label: "Name", value: "name" },
+    {label: "Name decreasing (Z à A)", value: "name-decreasing"}
 ] as const;
 
 export function SortButton({ value, onChange }: Props) {
@@ -39,7 +42,7 @@ export function SortButton({ value, onChange }: Props) {
     }
     return (
         <>
-            <Pressable onPress={onButtonPress}>
+            <Pressable ref={buttonRef} onPress={onButtonPress}>
                 <View
                     ref={buttonRef}
                     style={[styles.button, { backgroundColor: colors.grayWhite }]}
