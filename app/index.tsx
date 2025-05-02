@@ -14,7 +14,7 @@ import { getPokemonId } from "@/functions/pokemon";
 import { useInfiniteFetchQuery } from "@/hooks/useFetchQuery";
 import { useThemeColors } from "@/hooks/useThemeColors";
 
-// Fonction pour récupérer les types d'un Pokémon en utilisant son URL
+
 const getPokemonDetails = async (url: string) => {
   const response = await fetch(url);
   const data = await response.json();
@@ -119,7 +119,7 @@ export default function Index() {
           columnWrapperStyle={styles.gridGap}
           ListFooterComponent={isFetching ? <ActivityIndicator color={colors.tint} /> : null}
           ListEmptyComponent={
-            <Text style={{ textAlign: 'center', color: colors.gray, marginTop: 20 }}>
+            <Text style={{ textAlign: 'center', color: colors.grayBackground, marginTop: 20 }}>
               Aucun Pokémon ne correspond à ce filtre.
             </Text>
           }

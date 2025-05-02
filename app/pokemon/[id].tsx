@@ -11,10 +11,16 @@ import { useFetchQuery } from "@/hooks/useFetchQuery";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { router, useLocalSearchParams } from "expo-router";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { useState } from "react";
+
+
 
 export default function Pokemon() {
     const colors = useThemeColors();
     const params = useLocalSearchParams() as { id: string };
+    const currentId = parseInt(params.id);
+    const prevId = currentId > 1 ? currentId - 1 : null;
+    const nextId = currentId + 1;
     const { data: pokemon } = useFetchQuery("/pokemon/[id]", { id: params.id });
     const { data: species } = useFetchQuery("/pokemon-species/[id]/", { id: params.id })
     const mainType = pokemon?.types?.[0].type.name;
@@ -65,6 +71,18 @@ export default function Pokemon() {
                         width={200}
                         height={200}
                     />
+                <Row style={styles.navButtons}>
+                    {prevId && (
+                        <Pressable onPress={() => router.push(`/pokemon/${prevId}`)}>
+                            <Image source={require("@/assets/images/precedent.png")} style={styles.navIconWhite} />
+                        </Pressable>
+                    )}
+                    <View style={{ flex:1 }} />
+                    <Pressable onPress={() => router.push(`/pokemon/${nextId}`)}>
+                        <Image source={require("@/assets/images/suivant.png")} style={styles.navIconWhite} />
+
+                    </Pressable>
+                </Row>    
                     <Card style={styles.card}>
                         <Row gap={16}>
                             {types.map((type) => (
@@ -155,5 +173,18 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
         gap: 16,
         alignItems: "center",
+    },
+    navButtons: {
+        marginTop: 100,
+        marginBottom: 20,
+        paddingHorizontal: 20,
+        flexDirection: "row",
+        alignItems: "center",
+         
+    },
+    navIconWhite: {
+        width:40,
+        height: 40, tintColor: '#FFF',
+        
     }
 });
